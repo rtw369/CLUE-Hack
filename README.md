@@ -34,4 +34,12 @@ Important Rules:
   - Suggestion can only be made in a room.
   - Room suggestion must be the room they're in.
   - If the player to the right has any of the cards, they must privately show only one of them.
+
+Possible Strategy:
+  - Block doorway.
+  - Note taking:
+     1. Suggestions made
+     2. Whether a card has been shown or not
+     3. Who showed what card
+  - Path taking
   
