@@ -22,13 +22,13 @@ Weapons - 6:
 Rooms - 9:
   - Kitchen
   - Ballroom
-  - Consevatory
+  - Conservatory
   - Dining Room
   - Lounge
   - Hall
   - Study
   - Library
-  - Biliard Room
+  - Billiard Room
 
 Important Rules:
   - Suggestion can only be made in a room.
