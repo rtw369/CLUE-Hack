@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -26,11 +27,32 @@ fun StartingScreenView(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        //verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center
     ) {
-        PlayerButton(Color.Red)
-        PlayerButton(Color.Green)
-        Spacer(modifier = Modifier.height(150.dp))
+        PlayerSelectButtons()
+    }
+}
+
+@Composable
+fun PlayerSelectButtons() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        ButtonRow(Color.Red, Color.Green, Color.Yellow)
+        ButtonRow(Color.Magenta, Color.Blue, Color.White)
+    }
+}
+
+@Composable
+fun ButtonRow(color1: Color, color2: Color, color3: Color) {
+    Row(
+        modifier = Modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        PlayerButton(color1)
+        PlayerButton(color2)
+        PlayerButton(color3)
     }
 }
 
@@ -38,9 +60,9 @@ fun StartingScreenView(modifier: Modifier = Modifier) {
 fun PlayerButton(color: Color = Color.Black) {
     Button(
         modifier = Modifier
-            .height(12.dp)
-            .width(120.dp)
-            .padding(20.dp),
+            .height(108.dp)
+            .width(108.dp)
+            .padding(8.dp),
         onClick = { /*TODO*/ },
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RectangleShape
