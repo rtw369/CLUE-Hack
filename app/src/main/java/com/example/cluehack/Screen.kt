@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.cluehack.viewModel.StartingScreenViewModel
 
 enum class Screen() {
     StartingScreen,
@@ -27,5 +27,9 @@ fun ClueHackApp(
         navController = navController,
         startDestination = Screen.StartingScreen.name,
         modifier = Modifier.padding(32.dp)
-    ) {}
+    ) {
+        composable(route = Screen.StartingScreen.name) {
+
+        }
+    }
 }
