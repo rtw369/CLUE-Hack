@@ -1,5 +1,6 @@
 package com.example.cluehack
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -10,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cluehack.viewModel.StartingScreenView
 
 enum class Screen() {
     StartingScreen,
@@ -29,7 +31,7 @@ fun ClueHackApp(
         modifier = Modifier.padding(32.dp)
     ) {
         composable(route = Screen.StartingScreen.name) {
-
+            StartingScreenView(modifier = Modifier.fillMaxSize())
         }
     }
 }

@@ -21,12 +21,12 @@ Weapons - 6:
 
 Rooms - 9:
   - Kitchen
-  - Ballroom
+  - Ballroom(Drawing Room)
   - Conservatory
   - Dining Room
-  - Lounge
-  - Hall
-  - Study
+  - Lounge(Gazebo)
+  - Hall(Trophy Room)
+  - Study(Studio)
   - Library
   - Billiard Room
 
