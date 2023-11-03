@@ -1,6 +1,7 @@
 package com.example.cluehack.viewModel
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,15 +39,17 @@ import com.example.cluehack.data.DataSource
 
 @Composable
 fun StartingScreenView(modifier: Modifier = Modifier) {
-    var selectedCharacters: List<ImageCard> = DataSource().loadCharacters()
-
+    var selectedCharacters = remember {mutableStateListOf<ImageCard>()}
+    selectedCharacters.clear()
+    selectedCharacters.addAll(DataSource().getSelectedCharacters())
+    
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         PlayerSelectButtons()
-
+        Spacer(modifier = Modifier.height(80.dp))
         CharacterCardsRow(selectedCharacters)
     }
 }
@@ -75,13 +79,26 @@ fun ButtonRow(color1: Color, color2: Color, color3: Color) {
 
 @Composable
 fun PlayerButton(color: Color = Color.Black) {
+    var selected by remember { mutableStateOf(false) }
+    val borderWidth = if (selected) 4 else -1
+    val character = DataSource().loadCharacter(color)
+
     Button(
         modifier = Modifier
             .height(108.dp)
             .width(108.dp)
             .padding(8.dp),
-        onClick = { /*TODO*/ },
+        onClick = {
+            selected = !selected
+
+            if (selected) {
+                DataSource().addCharacter(character)
+            } else {
+                DataSource().removeCharacter(character)
+            }
+        },
         colors = ButtonDefaults.buttonColors(containerColor = color),
+        border = BorderStroke(borderWidth.dp, Color.Black),
         shape = RectangleShape
         ) {}
 }
@@ -90,7 +107,7 @@ fun PlayerButton(color: Color = Color.Black) {
 fun CharacterCardsRow(characters: List<ImageCard>) {
     LazyRow(
         modifier = Modifier
-            .height(260.dp)
+            .height(300.dp)
     ) {
         items(characters) {card ->
             CharacterCard(card)
