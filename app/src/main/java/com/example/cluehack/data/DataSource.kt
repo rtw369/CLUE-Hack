@@ -31,37 +31,6 @@ class DataSource() {
     private val library = ImageCard(R.string.library, R.drawable.library)
     private val billiardRoom = ImageCard(R.string.billiard_room, R.drawable.billiardroom)
 
-    private val selectedCharacters = mutableListOf<ImageCard>()
-
-
-//    fun load(@StringRes stringId: Int): ImageCard {
-//        when(stringId) {
-//            R.string.gazebo -> return gazebo
-//            R.string.trophy_room -> return trophyRoom
-//            R.string.library -> return library
-//            R.string.studio -> return studio
-//            R.string.billiard_room -> return billiardRoom
-//            R.string.dining_room -> return diningRoom
-//            R.string.conservatory -> return conservatory
-//            R.string.drawing_room -> return drawingRoom
-//            R.string.kitchen -> return kitchen
-//
-//            R.string.candlestick -> return candleStick
-//            R.string.lead_piping -> return leadPiping
-//            R.string.dagger -> return dagger
-//            R.string.revolver -> return revolver
-//            R.string.rope -> return rope
-//            R.string.spanner -> return spanner
-//
-//            R.string.miss_scarlett -> return missScarlett
-//            R.string.reverend_green -> return reverendGreen
-//            R.string.colonel_mustard -> return colonelMustard
-//            R.string.professor_plum -> return professorPlum
-//            R.string.mrs_white -> return mrsWhite
-//            else -> return mrsPeacock
-//        }
-//    }
-
     fun loadCharacter(color: Color): ImageCard {
         when(color) {
             Color.Red->  return missScarlett
@@ -107,21 +76,5 @@ class DataSource() {
             library,
             billiardRoom
         )
-    }
-
-    fun addCharacter(character: ImageCard) {
-        if (!selectedCharacters.contains(character)) {
-            selectedCharacters.add(character)
-        }
-    }
-
-    fun removeCharacter(character: ImageCard) {
-        if (selectedCharacters.contains(character)) {
-            selectedCharacters.remove(character)
-        }
-    }
-
-    fun getSelectedCharacters(): List<ImageCard> {
-        return selectedCharacters
     }
 }

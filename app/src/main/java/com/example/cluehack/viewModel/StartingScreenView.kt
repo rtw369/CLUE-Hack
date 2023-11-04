@@ -1,5 +1,6 @@
 package com.example.cluehack.viewModel
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -38,47 +39,51 @@ import com.example.cluehack.model.ImageCard
 import com.example.cluehack.data.DataSource
 
 @Composable
-fun StartingScreenView(modifier: Modifier = Modifier) {
-    var selectedCharacters = remember {mutableStateListOf<ImageCard>()}
-    selectedCharacters.clear()
-    selectedCharacters.addAll(DataSource().getSelectedCharacters())
-    
+fun StartingScreenView(
+    modifier: Modifier = Modifier,
+    onButtonClick: (ImageCard) -> Unit = {}
+) {
+    val characters = DataSource().loadCharacters()
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        PlayerSelectButtons()
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                PlayerButton(Color.Red, onClick = onButtonClick)
+                PlayerButton(Color.Green, onClick = onButtonClick)
+                PlayerButton(Color.Yellow, onClick = onButtonClick)
+            }
+
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                PlayerButton(Color.Magenta, onClick = onButtonClick)
+                PlayerButton(Color.Blue, onClick = onButtonClick)
+                PlayerButton(Color.White, onClick = onButtonClick)
+            }
+        }
+
         Spacer(modifier = Modifier.height(80.dp))
-        CharacterCardsRow(selectedCharacters)
+
+        CharacterCardsRow(characters = characters)
     }
 }
 
 @Composable
-fun PlayerSelectButtons() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        ButtonRow(Color.Red, Color.Green, Color.Yellow)
-        ButtonRow(Color.Magenta, Color.Blue, Color.White)
-    }
-}
-
-@Composable
-fun ButtonRow(color1: Color, color2: Color, color3: Color) {
-    Row(
-        modifier = Modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        PlayerButton(color1)
-        PlayerButton(color2)
-        PlayerButton(color3)
-    }
-}
-
-@Composable
-fun PlayerButton(color: Color = Color.Black) {
+fun PlayerButton(
+    color: Color = Color.Black,
+    onClick: (ImageCard) -> Unit = {}
+) {
     var selected by remember { mutableStateOf(false) }
     val borderWidth = if (selected) 4 else -1
     val character = DataSource().loadCharacter(color)
@@ -90,13 +95,8 @@ fun PlayerButton(color: Color = Color.Black) {
             .padding(8.dp),
         onClick = {
             selected = !selected
-
-            if (selected) {
-                DataSource().addCharacter(character)
-            } else {
-                DataSource().removeCharacter(character)
-            }
-        },
+            onClick(character)
+                  },
         colors = ButtonDefaults.buttonColors(containerColor = color),
         border = BorderStroke(borderWidth.dp, Color.Black),
         shape = RectangleShape
