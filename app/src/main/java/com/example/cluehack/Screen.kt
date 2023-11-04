@@ -42,7 +42,8 @@ fun ClueHackApp(
         composable(route = Screen.StartingScreen.name) {
             StartingScreenView(
                 modifier = modifier,
-                onButtonClick = { viewModel.changePlayerCharacters(it) }
+                onButtonClick = { viewModel.changePlayerCharacters(it) },
+                uiState = uiState
             )
         }
     }

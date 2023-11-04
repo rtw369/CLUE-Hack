@@ -37,14 +37,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.cluehack.model.ImageCard
 import com.example.cluehack.data.DataSource
+import com.example.cluehack.data.UiState
 
 @Composable
 fun StartingScreenView(
     modifier: Modifier = Modifier,
-    onButtonClick: (ImageCard) -> Unit = {}
+    onButtonClick: (ImageCard) -> Unit = {},
+    uiState: UiState
 ) {
-    val characters = DataSource().loadCharacters()
-
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -75,7 +75,7 @@ fun StartingScreenView(
 
         Spacer(modifier = Modifier.height(80.dp))
 
-        CharacterCardsRow(characters = characters)
+        CharacterCardsRow(uiState)
     }
 }
 
@@ -104,12 +104,12 @@ fun PlayerButton(
 }
 
 @Composable
-fun CharacterCardsRow(characters: List<ImageCard>) {
+fun CharacterCardsRow(uiState: UiState) {
     LazyRow(
         modifier = Modifier
             .height(300.dp)
     ) {
-        items(characters) {card ->
+        items(uiState.playerCharacters) {card ->
             CharacterCard(card)
         }
     }
@@ -142,5 +142,8 @@ fun StartingScreenViewPreview() {
             .padding(horizontal = 16.dp)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
+        uiState = UiState(
+            playerCharacters = DataSource().loadCharacters()
+        )
     )
 }
