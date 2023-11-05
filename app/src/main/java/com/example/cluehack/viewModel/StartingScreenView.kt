@@ -1,6 +1,5 @@
 package com.example.cluehack.viewModel
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -11,18 +10,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +43,7 @@ import com.example.cluehack.data.UiState
 fun StartingScreenView(
     modifier: Modifier = Modifier,
     onButtonClick: (ImageCard) -> Unit = {},
+    onConfirmClick: (ImageCard) -> Unit = {},
     uiState: UiState
 ) {
     Column(
@@ -75,7 +76,15 @@ fun StartingScreenView(
 
         Spacer(modifier = Modifier.height(80.dp))
 
-        CharacterCardsRow(uiState)
+        LazyRow(
+            modifier = Modifier
+                .height(300.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            items(uiState.playerCharacters) {card ->
+                CharacterCard(card, onConfirmClick = onConfirmClick)
+            }
+        }
     }
 }
 
@@ -103,25 +112,30 @@ fun PlayerButton(
         ) {}
 }
 
-@Composable
-fun CharacterCardsRow(uiState: UiState) {
-    LazyRow(
-        modifier = Modifier
-            .height(300.dp)
-    ) {
-        items(uiState.playerCharacters) {card ->
-            CharacterCard(card)
-        }
-    }
-}
 
 @Composable
-fun CharacterCard(card: ImageCard) {
-    Card(
+fun CharacterCard(card: ImageCard, onConfirmClick: (ImageCard) -> Unit) {
+    val openAlertDialog = remember { mutableStateOf(false) }
+
+    when {
+        openAlertDialog.value -> {
+            ConfirmationDialog(
+                onDismissRequest = { openAlertDialog.value = false },
+                onConfirmation = {
+                    openAlertDialog.value = false
+                    onConfirmClick(card)
+                },
+                character = card
+            )
+        }
+    }
+
+    IconButton(
         modifier = Modifier
             .padding(8.dp)
             .width(170.dp)
-            .height(250.dp)
+            .height(250.dp),
+        onClick = { openAlertDialog.value = true }
     ) {
         Image(
             painter = painterResource(card.drawableResourceId),
@@ -132,6 +146,41 @@ fun CharacterCard(card: ImageCard) {
             contentScale = ContentScale.FillBounds
         )
     }
+}
+
+@Composable
+fun ConfirmationDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+    character: ImageCard
+) {
+    AlertDialog(
+        icon = {
+               Image(
+                   modifier = Modifier
+                       .width(170.dp)
+                       .height(250.dp),
+                   painter = painterResource(character.drawableResourceId),
+                   contentDescription = stringResource(character.stringResourceId)
+               )
+        },
+        title = {
+            Text("Are you sure you want to play as ${
+                stringResource(character.stringResourceId)
+            }?")
+               },
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = {
+            TextButton(onClick = onConfirmation) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismissRequest) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Preview

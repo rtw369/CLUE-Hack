@@ -43,6 +43,7 @@ fun ClueHackApp(
             StartingScreenView(
                 modifier = modifier,
                 onButtonClick = { viewModel.changePlayerCharacters(it) },
+                onConfirmClick = { viewModel.setUserCharacter(it) },
                 uiState = uiState
             )
         }
