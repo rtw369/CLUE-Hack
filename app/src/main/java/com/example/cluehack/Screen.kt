@@ -25,6 +25,7 @@ enum class Screen() {
     MapScreen,
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClueHackApp(
     viewModel: GameViewModel = GameViewModel(),
@@ -34,18 +35,22 @@ fun ClueHackApp(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    NavHost(
-        navController = navController,
-        startDestination = Screen.StartingScreen.name,
-        modifier = Modifier.padding(32.dp)
-    ) {
-        composable(route = Screen.StartingScreen.name) {
-            StartingScreenView(
-                modifier = modifier,
-                onButtonClick = { viewModel.changePlayerCharacters(it) },
-                onConfirmClick = { viewModel.setUserCharacter(it) },
-                uiState = uiState
-            )
+    Scaffold(
+
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.StartingScreen.name,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(route = Screen.StartingScreen.name) {
+                StartingScreenView(
+                    modifier = modifier,
+                    onButtonClick = { viewModel.changePlayerCharacters(it) },
+                    onConfirmClick = { viewModel.setUserCharacter(it) },
+                    uiState = uiState
+                )
+            }
         }
     }
 }
