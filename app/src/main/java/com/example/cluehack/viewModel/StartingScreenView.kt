@@ -46,6 +46,7 @@ fun StartingScreenView(
     modifier: Modifier = Modifier,
     onButtonClick: (ImageCard) -> Unit = {},
     onConfirmClick: (ImageCard) -> Unit = {},
+    onNextButtonClick: () -> Unit = {},
     uiState: UiState
 ) {
     Column(
@@ -84,7 +85,11 @@ fun StartingScreenView(
             verticalAlignment = Alignment.CenterVertically
         ) {
             items(uiState.playerCharacters) {card ->
-                CharacterCard(card, onConfirmClick = onConfirmClick)
+                CharacterCard(
+                    card,
+                    onConfirmClick = onConfirmClick,
+                    onNextButtonClick = onNextButtonClick
+                )
             }
         }
     }
@@ -116,7 +121,11 @@ fun PlayerButton(
 
 
 @Composable
-fun CharacterCard(card: ImageCard, onConfirmClick: (ImageCard) -> Unit) {
+fun CharacterCard(
+    card: ImageCard,
+    onConfirmClick: (ImageCard) -> Unit,
+    onNextButtonClick: () -> Unit
+) {
     val openAlertDialog = remember { mutableStateOf(false) }
 
     when {
@@ -126,6 +135,7 @@ fun CharacterCard(card: ImageCard, onConfirmClick: (ImageCard) -> Unit) {
                 onConfirmation = {
                     openAlertDialog.value = false
                     onConfirmClick(card)
+                    onNextButtonClick()
                 },
                 character = card
             )

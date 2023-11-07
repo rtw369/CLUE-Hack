@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cluehack.viewModel.GameViewModel
+import com.example.cluehack.viewModel.MapScreenView
 import com.example.cluehack.viewModel.StartingScreenView
 
 enum class Screen() {
@@ -48,6 +49,14 @@ fun ClueHackApp(
                     modifier = modifier,
                     onButtonClick = { viewModel.changePlayerCharacters(it) },
                     onConfirmClick = { viewModel.setUserCharacter(it) },
+                    onNextButtonClick = { navController.navigate(Screen.MapScreen.name) },
+                    uiState = uiState
+                )
+            }
+
+            composable(route = Screen.MapScreen.name) {
+                MapScreenView(
+                    modifier = modifier,
                     uiState = uiState
                 )
             }
