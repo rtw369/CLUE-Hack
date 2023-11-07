@@ -9,7 +9,7 @@ Characters - 6:
   - YELLOW - Colonel Mustard
   - PURPLE - Professor Plum
   - BLUE - Mrs. Peacock
-  - WHITE - Mrs. White
+  - WHITE - Mrs. White (PINK - Dr. Orchid)
 
 Weapons - 6:
   - Candlestick
@@ -17,22 +17,23 @@ Weapons - 6:
   - Lead Piping
   - Revolver
   - Rope
-  - Spanner
+  - Spanner (Wrench)
 
 Rooms - 9:
   - Kitchen
-  - Ballroom(Drawing Room)
+  - Ballroom
   - Conservatory
   - Dining Room
-  - Lounge(Gazebo)
-  - Hall(Trophy Room)
-  - Study(Studio)
+  - Lounge
+  - Hall
+  - Study
   - Library
   - Billiard Room
 
 Important Rules:
   - Suggestion can only be made in a room.
   - Room suggestion must be the room they're in.
+  - Suggested character and weapon tokens are moved to the room they are suggested in.
   - If the player to the right has any of the cards, they must privately show only one of them.
 
 Possible Strategy:

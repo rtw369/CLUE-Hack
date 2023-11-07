@@ -9,5 +9,5 @@ data class UiState(
     val playerCharacters: List<ImageCard> = listOf(),
 
     // The user's character. Default will be Miss Scarlett.
-    val userCharacter: ImageCard = ImageCard(R.string.miss_scarlett, R.drawable.missscarlett, Color.Red)
+    val userCharacter: ImageCard = ImageCard(R.string.miss_scarlett, R.drawable.miss_scarlett, Color.Red)
 )

@@ -6,22 +6,22 @@
     <string name="colonel_mustard">Colonel Mustard</string>
     <string name="professor_plum">Professor Plum</string>
     <string name="mrs_peacock">Mrs. Peacock</string>
-    <string name="mrs_white">Mrs. White</string>
+    <string name="dr_orchid">Dr. Orchid</string>
 
     <string name="candlestick">Candlestick</string>
     <string name="dagger">Dagger</string>
-    <string name="lead_piping">Lead Piping</string>
+    <string name="lead_pipe">Lead Pipe</string>
     <string name="revolver">Revolver</string>
     <string name="rope">Rope</string>
-    <string name="spanner">Spanner</string>
+    <string name="wrench">Wrench</string>
 
     <string name="kitchen">Kitchen</string>
-    <string name="drawing_room">Drawing Room</string>
+    <string name="ballroom">Ballroom</string>
     <string name="conservatory">Conservatory</string>
     <string name="dining_room">Dining Room</string>
-    <string name="gazebo">Gazebo</string>
-    <string name="trophy_room">Trophy Room</string>
-    <string name="studio">Studio</string>
+    <string name="hall">Hall</string>
+    <string name="lounge">Lounge</string>
+    <string name="study">Study</string>
     <string name="library">Library</string>
     <string name="billiard_room">Billiard Room</string>
 </resources>
