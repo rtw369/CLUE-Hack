@@ -39,6 +39,8 @@ import com.example.cluehack.model.ImageCard
 import com.example.cluehack.data.DataSource
 import com.example.cluehack.data.UiState
 
+private val data = DataSource()
+
 @Composable
 fun StartingScreenView(
     modifier: Modifier = Modifier,
@@ -59,26 +61,26 @@ fun StartingScreenView(
                 modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PlayerButton(Color.Red, onClick = onButtonClick)
-                PlayerButton(Color.Green, onClick = onButtonClick)
-                PlayerButton(Color.Yellow, onClick = onButtonClick)
+                PlayerButton(data.red, onClick = onButtonClick)
+                PlayerButton(data.green, onClick = onButtonClick)
+                PlayerButton(data.yellow, onClick = onButtonClick)
             }
 
             Row(
                 modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PlayerButton(Color.Magenta, onClick = onButtonClick)
-                PlayerButton(Color.Blue, onClick = onButtonClick)
-                PlayerButton(Color.White, onClick = onButtonClick)
+                PlayerButton(data.purple, onClick = onButtonClick)
+                PlayerButton(data.blue, onClick = onButtonClick)
+                PlayerButton(data.pink, onClick = onButtonClick)
             }
         }
 
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         LazyRow(
             modifier = Modifier
-                .height(300.dp),
+                .height(200.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             items(uiState.playerCharacters) {card ->
@@ -95,7 +97,7 @@ fun PlayerButton(
 ) {
     var selected by remember { mutableStateOf(false) }
     val borderWidth = if (selected) 4 else -1
-    val character = DataSource().loadCharacter(color)
+    val character = data.loadCharacter(color)
 
     Button(
         modifier = Modifier
@@ -133,16 +135,16 @@ fun CharacterCard(card: ImageCard, onConfirmClick: (ImageCard) -> Unit) {
     IconButton(
         modifier = Modifier
             .padding(8.dp)
-            .width(170.dp)
-            .height(250.dp),
+            .width(110.dp)
+            .height(160.dp),
         onClick = { openAlertDialog.value = true }
     ) {
         Image(
             painter = painterResource(card.drawableResourceId),
             contentDescription = stringResource(card.stringResourceId),
             modifier = Modifier
-                .width(170.dp)
-                .height(250.dp),
+                .width(110.dp)
+                .height(260.dp),
             contentScale = ContentScale.FillBounds
         )
     }
@@ -158,8 +160,8 @@ fun ConfirmationDialog(
         icon = {
                Image(
                    modifier = Modifier
-                       .width(170.dp)
-                       .height(250.dp),
+                       .width(165.dp)
+                       .height(240.dp),
                    painter = painterResource(character.drawableResourceId),
                    contentDescription = stringResource(character.stringResourceId)
                )
@@ -192,7 +194,7 @@ fun StartingScreenViewPreview() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         uiState = UiState(
-            playerCharacters = DataSource().loadCharacters()
+            playerCharacters = data.loadCharacters()
         )
     )
 }

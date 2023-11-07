@@ -1,18 +1,23 @@
 package com.example.cluehack.data
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import com.example.cluehack.R
 import com.example.cluehack.model.ImageCard
 
 class DataSource() {
-    private val missScarlett = ImageCard(R.string.miss_scarlett, R.drawable.miss_scarlett, Color.Red)
-    private val reverendGreen = ImageCard(R.string.reverend_green, R.drawable.reverend_green, Color.Green)
-    private val colonelMustard = ImageCard(R.string.colonel_mustard, R.drawable.colonel_mustard, Color.Yellow)
-    private val professorPlum = ImageCard(R.string.professor_plum, R.drawable.professor_plum, Color.Magenta)
-    private val mrsPeacock = ImageCard(R.string.mrs_peacock, R.drawable.mrs_peacock, Color.Blue)
-    private val mrsWhite = ImageCard(R.string.dr_orchid, R.drawable.dr_orchid, Color.Magenta)
+    val red = Color(255, 0, 0)
+    val green = Color(60, 179,113)
+    val yellow = Color(255, 165, 0)
+    val blue = Color(0, 0, 255)
+    val pink = Color(238, 130, 238)
+    val purple = Color(106, 90, 205)
+
+    private val missScarlett = ImageCard(R.string.miss_scarlett, R.drawable.miss_scarlett, red)
+    private val reverendGreen = ImageCard(R.string.reverend_green, R.drawable.reverend_green, green)
+    private val colonelMustard = ImageCard(R.string.colonel_mustard, R.drawable.colonel_mustard, yellow)
+    private val professorPlum = ImageCard(R.string.professor_plum, R.drawable.professor_plum, purple)
+    private val mrsPeacock = ImageCard(R.string.mrs_peacock, R.drawable.mrs_peacock, blue)
+    private val drOrchid = ImageCard(R.string.dr_orchid, R.drawable.dr_orchid, pink)
 
     private val candleStick = ImageCard(R.string.candlestick, R.drawable.candlestick)
     private val dagger = ImageCard(R.string.dagger, R.drawable.dagger)
@@ -33,11 +38,11 @@ class DataSource() {
 
     fun loadCharacter(color: Color): ImageCard {
         when(color) {
-            Color.Red->  return missScarlett
-            Color.Green ->  return reverendGreen
-            Color.Yellow ->  return colonelMustard
-            Color.Magenta ->  return professorPlum
-            Color.White ->  return mrsWhite
+            red ->  return missScarlett
+            green ->  return reverendGreen
+            yellow ->  return colonelMustard
+            purple ->  return professorPlum
+            pink ->  return drOrchid
             else ->  return mrsPeacock
         }
     }
@@ -49,7 +54,7 @@ class DataSource() {
             colonelMustard,
             professorPlum,
             mrsPeacock,
-            mrsWhite
+            drOrchid
         )
     }
 

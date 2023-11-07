@@ -1,6 +1,5 @@
 package com.example.cluehack.data
 
-import androidx.compose.ui.graphics.Color
 import com.example.cluehack.R
 import com.example.cluehack.model.ImageCard
 
@@ -9,5 +8,5 @@ data class UiState(
     val playerCharacters: List<ImageCard> = listOf(),
 
     // The user's character. Default will be Miss Scarlett.
-    val userCharacter: ImageCard = ImageCard(R.string.miss_scarlett, R.drawable.miss_scarlett, Color.Red)
+    val userCharacter: ImageCard = ImageCard(R.string.miss_scarlett, R.drawable.miss_scarlett, DataSource().red)
 )
