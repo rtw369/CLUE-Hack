@@ -1,7 +1,6 @@
 package com.example.cluehack.data
 
 import com.example.cluehack.R
-import com.example.cluehack.model.Cell
 import com.example.cluehack.model.ImageCard
 
 data class UiState(
@@ -9,8 +8,5 @@ data class UiState(
     val playerCharacters: List<ImageCard> = listOf(),
 
     // The user's character. Default will be Miss Scarlett.
-    val userCharacter: ImageCard = ImageCard(R.string.miss_scarlett, R.drawable.miss_scarlett, DataSource().red),
-
-    // The board
-    val board: List<List<Cell>> = listOf(listOf())
+    val userCharacter: ImageCard = ImageCard(R.string.miss_scarlett, R.drawable.miss_scarlett, DataSource().red)
 )

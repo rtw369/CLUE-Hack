@@ -29,12 +29,12 @@ class DataSource() {
     private val spanner = ImageCard(R.string.wrench, R.drawable.wrench)
 
     private val kitchen = ImageCard(R.string.kitchen, R.drawable.kitchen)
-    private val drawingRoom= ImageCard(R.string.ballroom, R.drawable.ballroom)
+    private val ballRoom= ImageCard(R.string.ballroom, R.drawable.ballroom)
     private val conservatory = ImageCard(R.string.conservatory, R.drawable.conservatory)
     private val diningRoom = ImageCard(R.string.dining_room, R.drawable.dining_room)
-    private val gazebo = ImageCard(R.string.hall, R.drawable.hall)
-    private val trophyRoom = ImageCard(R.string.lounge, R.drawable.lounge)
-    private val studio = ImageCard(R.string.study, R.drawable.study)
+    private val hall = ImageCard(R.string.hall, R.drawable.hall)
+    private val lounge = ImageCard(R.string.lounge, R.drawable.lounge)
+    private val study = ImageCard(R.string.study, R.drawable.study)
     private val library = ImageCard(R.string.library, R.drawable.library)
     private val billiardRoom = ImageCard(R.string.billiard_room, R.drawable.billiard_room)
 
@@ -74,12 +74,12 @@ class DataSource() {
     fun loadRooms(): List<ImageCard> {
         return listOf<ImageCard>(
             kitchen,
-            drawingRoom,
+            ballRoom,
             conservatory,
             diningRoom,
-            gazebo,
-            trophyRoom,
-            studio,
+            hall,
+            lounge,
+            study,
             library,
             billiardRoom
         )
