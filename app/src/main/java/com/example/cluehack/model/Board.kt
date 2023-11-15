@@ -58,7 +58,7 @@ data class Board(
                     path -> newBoardRow.add("path")
                     wall -> newBoardRow.add("wall")
                 }
-                
+
                 if (playerStartingLocation.contains(listOf(row, col))) {
                     // Player needs to be added here.
                 }
