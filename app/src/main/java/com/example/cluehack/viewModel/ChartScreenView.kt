@@ -1,6 +1,7 @@
 package com.example.cluehack.viewModel
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -45,105 +47,101 @@ fun ChartScreenView(
     val weapons = DataSource().loadWeapons()
     val rooms = DataSource().loadRooms()
 
+    val cellHeight = 45.dp
+    val cellWidth = 45.dp
+    val longCellWidth = 120.dp
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Row{
-            Column {
-                LazyColumn(
-                    modifier = Modifier
-                        .width(85.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    item {
+        Column(
+            modifier = Modifier.height(600.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+            LazyRow {
+                item {
+                    Text(
+                        text = "",
+                        modifier = Modifier
+                            .width(longCellWidth)
+                            .height(cellHeight)
+                    )
+                }
+                items(uiState.playerCharacters.count()) { counter ->
+                    TextButton(
+                        modifier = Modifier
+                            .width(45.dp)
+                            .height(45.dp),
+                        onClick = { /*TODO*/ },
+                        shape = RectangleShape
+                    ) {
                         Text(
-                            modifier = Modifier
-                                .fillParentMaxWidth()
-                                .height(45.dp),
-                            text = ""
-                        )
-
-                        Divider(
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        )
-                    }
-                    items(characters) {character ->
-                        Text(
-                            modifier = Modifier
-                                .fillParentMaxWidth()
-                                .height(45.dp)
-                                .padding(horizontal = 4.dp),
-                            textAlign = TextAlign.Center,
-                            text = stringResource(character.stringResourceId),
-                            color = Color.White
-                        )
-                    }
-                    item {Divider(modifier = Modifier.padding(vertical = 8.dp))}
-                    items(weapons) {weapon ->
-                        Text(
-                            modifier = Modifier
-                                .fillParentMaxWidth()
-                                .height(45.dp)
-                                .padding(horizontal = 4.dp),
-                            textAlign = TextAlign.Center,
-                            text = stringResource(weapon.stringResourceId),
-                            color = Color.White
-                        )
-                    }
-                    item {Divider(modifier = Modifier.padding(vertical = 8.dp))}
-                    items(rooms) {room ->
-                        Text(
-                            modifier = Modifier
-                                .fillParentMaxWidth()
-                                .height(45.dp)
-                                .padding(horizontal = 4.dp),
-                            textAlign = TextAlign.Center,
-                            text = stringResource(room.stringResourceId),
+                            text = "P${counter + 1}",
                             color = Color.White
                         )
                     }
                 }
             }
 
-            Column {
+            Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 LazyRow(
-                    modifier = Modifier,
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.height(1200.dp)
                 ) {
-                    items(uiState.playerCharacters.count()) {counter ->
-                        TextButton(
-                            modifier = Modifier
-                                .width(45.dp)
-                                .height(45.dp),
-                            onClick = { /*TODO*/ },
-                            shape = RectangleShape
-                        ) {
-                            Text(
-                                text = "P${counter+1}",
-                                color = Color.White
-                            )
+                    item {
+                        LazyColumn(userScrollEnabled = false) {
+                            items(characters) {character ->
+                                Text(
+                                    modifier = Modifier
+                                        .width(longCellWidth)
+                                        .height(cellHeight)
+                                        .padding(horizontal = 4.dp)
+                                        .wrapContentHeight(Alignment.CenterVertically),
+                                    textAlign = TextAlign.Center,
+                                    text = stringResource(character.stringResourceId),
+                                    color = Color.White
+                                )
+                            }
+                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
+                            items(weapons) {weapon ->
+                                Text(
+                                    modifier = Modifier
+                                        .width(longCellWidth)
+                                        .height(cellHeight)
+                                        .padding(horizontal = 4.dp)
+                                        .wrapContentHeight(Alignment.CenterVertically),
+                                    textAlign = TextAlign.Center,
+                                    text = stringResource(weapon.stringResourceId),
+                                    color = Color.White
+                                )
+                            }
+                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
+                            items(rooms) {room ->
+                                Text(
+                                    modifier = Modifier
+                                        .width(longCellWidth)
+                                        .height(cellHeight)
+                                        .padding(horizontal = 4.dp)
+                                        .wrapContentHeight(Alignment.CenterVertically),
+                                    textAlign = TextAlign.Center,
+                                    text = stringResource(room.stringResourceId),
+                                    color = Color.White
+                                )
+                            }
                         }
                     }
-                }
 
-                Divider(
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
-
-                LazyRow(
-                    modifier = Modifier,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
                     items(uiState.playerCharacters.count()) {_ ->
-                        LazyColumn {
+                        LazyColumn(userScrollEnabled = false) {
                             items(characters.count()) {_ ->
                                 ElevatedButton(
                                     modifier = Modifier
-                                        .width(45.dp)
-                                        .height(45.dp),
+                                        .width(cellWidth)
+                                        .height(cellHeight),
                                     onClick = { /*TODO*/ },
                                     shape = RectangleShape,
                                     border = BorderStroke(1.dp, Color.White),
@@ -151,12 +149,12 @@ fun ChartScreenView(
 
                                 ) {}
                             }
-                            item {Divider(modifier = Modifier.padding(vertical = 8.dp))}
+                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
                             items(weapons.count()) {_ ->
                                 ElevatedButton(
                                     modifier = Modifier
-                                        .width(45.dp)
-                                        .height(45.dp),
+                                        .width(cellWidth)
+                                        .height(cellHeight),
                                     onClick = { /*TODO*/ },
                                     shape = RectangleShape,
                                     border = BorderStroke(1.dp, Color.White),
@@ -164,12 +162,12 @@ fun ChartScreenView(
 
                                 ) {}
                             }
-                            item {Divider(modifier = Modifier.padding(vertical = 8.dp))}
+                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
                             items(rooms.count()) {_ ->
                                 ElevatedButton(
                                     modifier = Modifier
-                                        .width(45.dp)
-                                        .height(45.dp),
+                                        .width(cellWidth)
+                                        .height(cellHeight),
                                     onClick = { /*TODO*/ },
                                     shape = RectangleShape,
                                     border = BorderStroke(1.dp, Color.White),
@@ -183,19 +181,23 @@ fun ChartScreenView(
             }
         }
 
-//        Row () {
-//            IconButton(onClick = { /*TODO*/ }) {
-//
-//            }
-//
-//            IconButton(onClick = { /*TODO*/ }) {
-//
-//            }
-//
-//            IconButton(onClick = { /*TODO*/ }) {
-//
-//            }
-//        }
+
+
+
+
+        Row () {
+            IconButton(onClick = { /*TODO*/ }) {
+
+            }
+
+            IconButton(onClick = { /*TODO*/ }) {
+
+            }
+
+            IconButton(onClick = { /*TODO*/ }) {
+
+            }
+        }
     }
 }
 

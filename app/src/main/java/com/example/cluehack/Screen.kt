@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cluehack.viewModel.ChartScreenView
 import com.example.cluehack.viewModel.GameViewModel
 import com.example.cluehack.viewModel.MapScreenView
 import com.example.cluehack.viewModel.StartingScreenView
@@ -49,13 +50,20 @@ fun ClueHackApp(
                     modifier = modifier,
                     onButtonClick = { viewModel.changePlayerCharacters(it) },
                     onConfirmClick = { viewModel.setUserCharacter(it) },
-                    onNextButtonClick = { navController.navigate(Screen.MapScreen.name) },
+                    onNextButtonClick = { navController.navigate(Screen.ChartScreen.name) },
                     uiState = uiState
                 )
             }
 
             composable(route = Screen.MapScreen.name) {
                 MapScreenView(
+                    modifier = modifier,
+                    uiState = uiState
+                )
+            }
+
+            composable(route = Screen.ChartScreen.name) {
+                ChartScreenView(
                     modifier = modifier,
                     uiState = uiState
                 )
