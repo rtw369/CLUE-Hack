@@ -189,78 +189,65 @@ fun ChartScreenView(
             val closeButtonColor = if (closeButtonEnabled) Color.Green else Color.White
             val questionButtonColor = if (questionButtonEnabled) Color.Green else Color.White
 
-            IconButton(
+            TextButton(
                 modifier = Modifier
-                    .width(60.dp)
-                    .height(60.dp),
+                    .width(100.dp)
+                    .height(100.dp),
                 onClick = {
                     onIconButtonClick("Done")
                     doneButtonEnabled = true
                     closeButtonEnabled = false
                     questionButtonEnabled = false
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Done,
-                    contentDescription = stringResource(R.string.done),
-                    tint = doneButtonColor,
-                    modifier = Modifier
-                        .width(60.dp)
-                        .height(60.dp)
+                }) {
+                Text(
+                    text = "!",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
+                    modifier = Modifier.wrapContentHeight(Alignment.CenterVertically),
+                    color = doneButtonColor
                 )
             }
-            Spacer(modifier = Modifier.width(40.dp))
-            IconButton(
+
+            TextButton(
                 modifier = Modifier
-                    .width(60.dp)
-                    .height(60.dp),
-                onClick = {
-                    onIconButtonClick("Close")
-                    doneButtonEnabled = false
-                    closeButtonEnabled = true
-                    questionButtonEnabled = false
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Close,
-                    contentDescription = stringResource(R.string.close),
-                    tint = closeButtonColor,
-                    modifier = Modifier
-                        .width(60.dp)
-                        .height(60.dp)
-                )
-            }
-            Spacer(modifier = Modifier.width(40.dp))
-            IconButton(
-                modifier = Modifier
-                    .width(60.dp)
-                    .height(60.dp),
+                    .width(100.dp)
+                    .height(100.dp),
                 onClick = {
                     onIconButtonClick("Question")
                     doneButtonEnabled = false
                     closeButtonEnabled = false
                     questionButtonEnabled = true
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Search,
-                    contentDescription = stringResource(R.string.question_mark),
-                    tint = questionButtonColor,
-                    modifier = Modifier
-                        .width(60.dp)
-                        .height(60.dp)
+                }) {
+                Text(
+                    text = "?",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
+                    modifier = Modifier.wrapContentHeight(Alignment.CenterVertically),
+                    color = questionButtonColor
                 )
             }
 
-//            IconButton(onClick = { onIconButtonClick("Question") }) {
-//                Icon(
-//                    imageVector = Icons.Outlined.Search,
-//                    contentDescription = stringResource(R.string.question_mark),
-//                    modifier = Modifier
-//                        .width(60.dp)
-//                        .height(60.dp)
-//                )
-//            }
+            TextButton(
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(100.dp),
+                onClick = {
+                    onIconButtonClick("Close")
+                    doneButtonEnabled = false
+                    closeButtonEnabled = true
+                    questionButtonEnabled = false
+                }) {
+                Text(
+                    text = "X",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
+                    modifier = Modifier.wrapContentHeight(Alignment.CenterVertically),
+                    color = closeButtonColor
+                )
+            }
         }
     }
 }
