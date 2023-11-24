@@ -65,7 +65,8 @@ fun ClueHackApp(
             composable(route = Screen.ChartScreen.name) {
                 ChartScreenView(
                     modifier = modifier,
-                    uiState = uiState
+                    uiState = uiState,
+                    onIconButtonClick = { viewModel.changeStateButton(it) }
                 )
             }
         }

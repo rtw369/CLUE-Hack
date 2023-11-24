@@ -24,4 +24,8 @@
     <string name="study">Study</string>
     <string name="library">Library</string>
     <string name="billiard_room">Billiard Room</string>
+
+    <string name="done">Done</string>
+    <string name="close">Close</string>
+    <string name="question_mark">Question Mark</string>
 </resources>

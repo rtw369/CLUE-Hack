@@ -15,9 +15,7 @@ class GameViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    fun changePlayerCharacters(
-        newCharacter: ImageCard
-    ) {
+    fun changePlayerCharacters(newCharacter: ImageCard) {
         val currentPlayerCharacters = _uiState.value.playerCharacters
 
         if (currentPlayerCharacters.contains(newCharacter)) {
@@ -43,14 +41,20 @@ class GameViewModel : ViewModel() {
                 )
             }
         }
-
-//        Log.d("Updated", _uiState.value.playerCharacters.toString())
     }
 
     fun setUserCharacter(character: ImageCard) {
-        _uiState.update {currentState ->
+        _uiState.update { currentState ->
             currentState.copy(
                 userCharacter = character
+            )
+        }
+    }
+
+    fun changeStateButton(state: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                currentStateForButtonInChartScreen = state
             )
         }
     }
