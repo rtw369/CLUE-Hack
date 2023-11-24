@@ -114,7 +114,7 @@ fun PlayerButton(
             onClick(character)
                   },
         colors = ButtonDefaults.buttonColors(containerColor = color),
-        border = BorderStroke(borderWidth.dp, Color.DarkGray),
+        border = BorderStroke(borderWidth.dp, Color.White),
         shape = RectangleShape
         ) {}
 }
