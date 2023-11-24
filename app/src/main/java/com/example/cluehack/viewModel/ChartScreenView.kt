@@ -35,14 +35,21 @@ import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.cluehack.R
 import com.example.cluehack.data.DataSource
 import com.example.cluehack.data.UiState
@@ -174,37 +181,86 @@ fun ChartScreenView(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            var doneButtonEnabled by remember { mutableStateOf(true) }
+            var closeButtonEnabled by remember { mutableStateOf(false) }
+            var questionButtonEnabled by remember { mutableStateOf(false) }
+
+            val doneButtonColor = if (doneButtonEnabled) Color.Green else Color.White
+            val closeButtonColor = if (closeButtonEnabled) Color.Green else Color.White
+            val questionButtonColor = if (questionButtonEnabled) Color.Green else Color.White
+
             IconButton(
-                onClick = { onIconButtonClick("Done") }
+                modifier = Modifier
+                    .width(60.dp)
+                    .height(60.dp),
+                onClick = {
+                    onIconButtonClick("Done")
+                    doneButtonEnabled = true
+                    closeButtonEnabled = false
+                    questionButtonEnabled = false
+                }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Done,
                     contentDescription = stringResource(R.string.done),
+                    tint = doneButtonColor,
                     modifier = Modifier
                         .width(60.dp)
                         .height(60.dp)
                 )
             }
             Spacer(modifier = Modifier.width(40.dp))
-            IconButton(onClick = { onIconButtonClick("Close") }) {
+            IconButton(
+                modifier = Modifier
+                    .width(60.dp)
+                    .height(60.dp),
+                onClick = {
+                    onIconButtonClick("Close")
+                    doneButtonEnabled = false
+                    closeButtonEnabled = true
+                    questionButtonEnabled = false
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
                     contentDescription = stringResource(R.string.close),
+                    tint = closeButtonColor,
                     modifier = Modifier
                         .width(60.dp)
                         .height(60.dp)
                 )
             }
             Spacer(modifier = Modifier.width(40.dp))
-            IconButton(onClick = { onIconButtonClick("Question") }) {
+            IconButton(
+                modifier = Modifier
+                    .width(60.dp)
+                    .height(60.dp),
+                onClick = {
+                    onIconButtonClick("Question")
+                    doneButtonEnabled = false
+                    closeButtonEnabled = false
+                    questionButtonEnabled = true
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Outlined.Search,
                     contentDescription = stringResource(R.string.question_mark),
+                    tint = questionButtonColor,
                     modifier = Modifier
                         .width(60.dp)
                         .height(60.dp)
                 )
             }
+
+//            IconButton(onClick = { onIconButtonClick("Question") }) {
+//                Icon(
+//                    imageVector = Icons.Outlined.Search,
+//                    contentDescription = stringResource(R.string.question_mark),
+//                    modifier = Modifier
+//                        .width(60.dp)
+//                        .height(60.dp)
+//                )
+//            }
         }
     }
 }
