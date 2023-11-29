@@ -1,17 +1,14 @@
 package com.example.cluehack.viewModel
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,19 +16,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Done
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -44,13 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.cluehack.R
 import com.example.cluehack.data.DataSource
 import com.example.cluehack.data.UiState
 
@@ -58,8 +43,8 @@ import com.example.cluehack.data.UiState
 fun ChartScreenView(
     modifier: Modifier,
     uiState: UiState,
-    onIconButtonClick: (String) -> Unit = {},
-    onChartButtonClick: () -> Unit = {}
+    symbolButtonClick: (String) -> Unit = {},
+    chartButtonClick: () -> Unit = {}
 ) {
     val characters = DataSource().loadCharacters()
     val weapons = DataSource().loadWeapons()
@@ -78,7 +63,7 @@ fun ChartScreenView(
             modifier = Modifier.height(600.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        ) {
             LazyRow {
                 item {
                     Text(
@@ -124,7 +109,7 @@ fun ChartScreenView(
                                     color = Color.White
                                 )
                             }
-                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
+                            //item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
                             items(weapons) {weapon ->
                                 Text(
                                     modifier = Modifier
@@ -137,7 +122,7 @@ fun ChartScreenView(
                                     color = Color.White
                                 )
                             }
-                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
+                            //item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
                             items(rooms) {room ->
                                 Text(
                                     modifier = Modifier
@@ -153,18 +138,10 @@ fun ChartScreenView(
                         }
                     }
 
-                    items(uiState.playerCharacters.count()) {_ ->
+                    items(uiState.playerCardsChart) {playerCardChart ->
                         LazyColumn(userScrollEnabled = false) {
-                            items(characters.count()) {_ ->
-                                ChartButton()
-                            }
-                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
-                            items(weapons.count()) {_ ->
-                                ChartButton()
-                            }
-                            item { Divider(modifier = Modifier.padding(vertical = 8.dp)) }
-                            items(rooms.count()) {_ ->
-                                ChartButton()
+                            items(playerCardChart) {cell ->
+                                ChartButton(cell)
                             }
                         }
                     }
@@ -194,7 +171,7 @@ fun ChartScreenView(
                     .width(100.dp)
                     .height(100.dp),
                 onClick = {
-                    onIconButtonClick("Done")
+                    symbolButtonClick("Done")
                     doneButtonEnabled = true
                     closeButtonEnabled = false
                     questionButtonEnabled = false
@@ -214,7 +191,7 @@ fun ChartScreenView(
                     .width(100.dp)
                     .height(100.dp),
                 onClick = {
-                    onIconButtonClick("Question")
+                    symbolButtonClick("Question")
                     doneButtonEnabled = false
                     closeButtonEnabled = false
                     questionButtonEnabled = true
@@ -234,7 +211,7 @@ fun ChartScreenView(
                     .width(100.dp)
                     .height(100.dp),
                 onClick = {
-                    onIconButtonClick("Close")
+                    symbolButtonClick("Close")
                     doneButtonEnabled = false
                     closeButtonEnabled = true
                     questionButtonEnabled = false
@@ -254,17 +231,34 @@ fun ChartScreenView(
 
 @Composable
 fun ChartButton(
+    state: String = "",
     onClick: () -> Unit = {}
 ) {
     ElevatedButton(
         modifier = Modifier
             .width(45.dp)
             .height(45.dp),
-        onClick = { onClick() },
+        onClick = {
+            onClick()
+        },
         shape = RectangleShape,
         border = BorderStroke(1.dp, Color.White),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
-    ) {}
+    ) {
+        var text = ""
+        when(state) {
+            "Empty" -> text = "check"
+            "Done" -> text = "!"
+            "Question" -> text = "?"
+            "Close" -> text = "X"
+        }
+
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.wrapContentHeight(Alignment.CenterVertically)
+        )
+    }
 }
 
 @Preview

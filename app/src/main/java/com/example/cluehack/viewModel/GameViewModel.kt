@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.util.EnumSet.range
 
 class GameViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
@@ -55,6 +56,31 @@ class GameViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 currentStateForButtonInChartScreen = state
+            )
+        }
+    }
+
+    fun createPlayerCardChart() {
+        val playerCardChart = mutableListOf<List<String>>()
+        val numOfCharacters = DataSource().loadCharacters().count()
+        val numOfWeapons = DataSource().loadWeapons().count()
+        val numOfRooms = DataSource().loadRooms().count()
+
+        val defaultPlayerCardChart = mutableListOf<String>()
+
+        for (n in 1..(numOfCharacters + numOfWeapons + numOfRooms)) {
+            defaultPlayerCardChart.add("Empty")
+        }
+
+        val numOfPlayers = _uiState.value.playerCharacters.count()
+
+        for (n in 1..numOfPlayers) {
+            playerCardChart.add(defaultPlayerCardChart)
+        }
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                playerCardsChart = playerCardChart
             )
         }
     }

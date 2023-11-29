@@ -1,6 +1,5 @@
 package com.example.cluehack
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -9,8 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -50,7 +47,10 @@ fun ClueHackApp(
                     modifier = modifier,
                     onButtonClick = { viewModel.changePlayerCharacters(it) },
                     onConfirmClick = { viewModel.setUserCharacter(it) },
-                    onNextButtonClick = { navController.navigate(Screen.ChartScreen.name) },
+                    onNextButtonClick = {
+                        navController.navigate(Screen.ChartScreen.name)
+                        viewModel.createPlayerCardChart()
+                    },
                     uiState = uiState
                 )
             }
@@ -66,7 +66,7 @@ fun ClueHackApp(
                 ChartScreenView(
                     modifier = modifier,
                     uiState = uiState,
-                    onIconButtonClick = { viewModel.changeStateButton(it) }
+                    symbolButtonClick = { viewModel.changeStateButton(it) }
                 )
             }
         }
