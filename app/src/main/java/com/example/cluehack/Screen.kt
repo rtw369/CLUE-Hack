@@ -66,7 +66,8 @@ fun ClueHackApp(
                 ChartScreenView(
                     modifier = modifier,
                     uiState = uiState,
-                    symbolButtonClick = { viewModel.changeStateButton(it) }
+                    symbolButtonClick = { viewModel.changeStateButton(it) },
+                    chartButtonClick = { viewModel.changeChartState(it) }
                 )
             }
         }

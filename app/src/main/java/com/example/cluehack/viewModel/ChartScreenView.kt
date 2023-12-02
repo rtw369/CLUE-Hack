@@ -44,7 +44,7 @@ fun ChartScreenView(
     modifier: Modifier,
     uiState: UiState,
     symbolButtonClick: (String) -> Unit = {},
-    chartButtonClick: () -> Unit = {}
+    chartButtonClick: (List<Int>) -> Unit = {}
 ) {
     val characters = DataSource().loadCharacters()
     val weapons = DataSource().loadWeapons()
@@ -138,10 +138,10 @@ fun ChartScreenView(
                         }
                     }
 
-                    items(uiState.playerCardsChart) {playerCardChart ->
+                    items(uiState.playerCardsChart.count()) {n ->
                         LazyColumn(userScrollEnabled = false) {
-                            items(playerCardChart) {cell ->
-                                ChartButton(cell)
+                            items(uiState.playerCardsChart[n].count()) {m ->
+                                ChartButton(listOf(n, m), uiState, chartButtonClick)
                             }
                         }
                     }
@@ -231,31 +231,33 @@ fun ChartScreenView(
 
 @Composable
 fun ChartButton(
-    state: String = "",
-    onClick: () -> Unit = {}
+    index: List<Int>,
+    uiState: UiState,
+    onClick: (List<Int>) -> Unit = {}
 ) {
-    ElevatedButton(
+    val n = index[0]
+    val m = index[1]
+    var text by remember { mutableStateOf("") }
+    when(uiState.playerCardsChart[n][m]) {
+        "Empty" -> text = ""
+        "Done" -> text = "!"
+        "Question" -> text = "?"
+        "Close" -> text = "X"
+    }
+
+    TextButton(
         modifier = Modifier
             .width(45.dp)
             .height(45.dp),
-        onClick = {
-            onClick()
-        },
+        onClick = { onClick(index) },
         shape = RectangleShape,
         border = BorderStroke(1.dp, Color.White),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
     ) {
-        var text = ""
-        when(state) {
-            "Empty" -> text = "check"
-            "Done" -> text = "!"
-            "Question" -> text = "?"
-            "Close" -> text = "X"
-        }
-
         Text(
             text = text,
             textAlign = TextAlign.Center,
+            color = Color.White,
             modifier = Modifier.wrapContentHeight(Alignment.CenterVertically)
         )
     }

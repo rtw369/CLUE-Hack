@@ -84,4 +84,31 @@ class GameViewModel : ViewModel() {
             )
         }
     }
+
+    fun changeChartState(index: List<Int>) {
+        val n = index[0]
+        val m = index[1]
+
+        // Get the chart from uiState and copy it to a new variable.
+        val uiStatePlayerCardsChart = _uiState.value.playerCardsChart.toMutableList()
+        val newChart: MutableList<MutableList<String>> = mutableListOf<MutableList<String>>()
+        for (item in uiStatePlayerCardsChart) {
+            newChart.add(item.toMutableList())
+        }
+
+        // Change the chart as wanted.
+        val newState = _uiState.value.currentStateForButtonInChartScreen
+        if (newChart[n][m] == newState) {
+            newChart[n][m] = "Empty"
+        } else {
+            newChart[n][m] = newState
+        }
+
+        // Update the uiState
+        _uiState.update { currentState ->
+            currentState.copy(
+                playerCardsChart = newChart
+            )
+        }
+    }
 }
