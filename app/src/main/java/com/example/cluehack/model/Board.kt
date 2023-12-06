@@ -1,9 +1,12 @@
 package com.example.cluehack.model
 
+import android.widget.Button
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -89,26 +92,33 @@ data class Board(
 }
 
 data class Cell(
-    // state is one of the following: Empty, Room, Path
+    // state is one of the following: Empty, Room, Path, Door
     var state: String,
 
     // option contains information: if path, has what player; if room, which sides has the wall or doorway.
     var option: String = "None"
 ) {
+    private val buttonColor = when(state) {
+        "0" -> DataSource().green
+        "1" -> Color.Yellow
+        "r" -> Color.Gray
+        "d" -> Color.White
+        else -> Color.Transparent
+    }
+
+
     @Composable
     fun CellButton() {
-        TextButton(modifier = Modifier
-            .width(45.dp)
-            .height(45.dp),
-            onClick = {  },
+        Button(
+            modifier = Modifier
+                .width(17.dp)
+                .height(20.dp),
+            onClick = { /*TODO*/ },
             shape = RectangleShape,
-            border = BorderStroke(1.dp, Color.White),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)) {
-            Text(
-                text = option,
-                color = Color.White,
-                fontSize = 8.sp
-            )
+            colors = ButtonDefaults.buttonColors(buttonColor),
+            //border = BorderStroke(1.dp, Color.White)
+        ) {
+            Text(text = "")
         }
     }
 }

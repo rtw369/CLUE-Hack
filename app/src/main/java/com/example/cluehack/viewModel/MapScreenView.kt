@@ -3,7 +3,9 @@ package com.example.cluehack.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -35,9 +37,10 @@ fun MapScreenView(
         val board = Board(uiState)
         board.createBoard()
 
-        LazyColumn {
+        LazyColumn(modifier = Modifier.height(1200.dp))
+        {
             items(board.getBoard()) {list ->
-                LazyRow {
+                LazyRow() {
                     items(list) {cell ->
                         cell.CellButton()
                     }
