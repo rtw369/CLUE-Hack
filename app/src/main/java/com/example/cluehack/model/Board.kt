@@ -1,6 +1,17 @@
 package com.example.cluehack.model
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.cluehack.data.DataSource
 import com.example.cluehack.data.UiState
 
@@ -38,9 +49,10 @@ data class Board(
 
     private val empty = "0"
     private val path = "1"
-    private val wall = "r"
+    private val room = "r"
+    private val door = "d"
 
-    private val board = mutableListOf(mutableListOf<String>())
+    private var board = mutableListOf<MutableList<Cell>>()
     private val playerStartingLocation = listOf(
         listOf(0, 9), // Dr. Orchid
         listOf(0, 14), // Reverend Green
@@ -51,27 +63,52 @@ data class Board(
         )
 
     fun createBoard() {
+        board = mutableListOf<MutableList<Cell>>()
+        var opt = "None"
 
+        for (n in 0 until initialBoard.count()) {
+            var newList = mutableListOf<Cell>()
+            for (m in 0 until initialBoard[n].count()) {
+                val item = initialBoard[n][m]
+                when (item) {
+                    empty -> opt = "None"
+                    path -> opt = if (listOf(n, m) in playerStartingLocation) "Player" else "None"
+                    room -> opt = "None"
+                    door -> opt = "Door"
+                }
+
+                newList.add(Cell(item, option = opt))
+            }
+            board.add(newList)
+        }
     }
 
-    fun getBoard(): List<List<String>> {
+    fun getBoard(): List<List<Cell>> {
         return board
     }
 }
 
 data class Cell(
     // state is one of the following: Empty, Room, Path
-    var state: String = "Empty",
+    var state: String,
 
     // option contains information: if path, has what player; if room, which sides has the wall or doorway.
     var option: String = "None"
 ) {
-    fun setState(newState: String, opt: String = "None") {
-        state = newState
-        option = opt
-    }
-
     @Composable
-    fun button() {
+    fun CellButton() {
+        TextButton(modifier = Modifier
+            .width(45.dp)
+            .height(45.dp),
+            onClick = {  },
+            shape = RectangleShape,
+            border = BorderStroke(1.dp, Color.White),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)) {
+            Text(
+                text = option,
+                color = Color.White,
+                fontSize = 8.sp
+            )
+        }
     }
 }

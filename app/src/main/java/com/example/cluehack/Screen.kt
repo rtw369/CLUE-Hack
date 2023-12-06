@@ -48,7 +48,7 @@ fun ClueHackApp(
                     onButtonClick = { viewModel.changePlayerCharacters(it) },
                     onConfirmClick = { viewModel.setUserCharacter(it) },
                     onNextButtonClick = {
-                        navController.navigate(Screen.ChartScreen.name)
+                        navController.navigate(Screen.MapScreen.name)
                         viewModel.createPlayerCardChart()
                     },
                     uiState = uiState
